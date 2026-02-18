@@ -22,7 +22,77 @@ function Editor() {
       },
     },
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        link: {
+          openOnClick: false,
+          autolink: true,
+          defaultProtocol: 'https',
+          protocols: ['http', 'https'],
+          isAllowedUri: (url, ctx) => {
+            try {
+              // construct URL
+              const parsedUrl = url.includes(':')
+                ? new URL(url)
+                : new URL(`${ctx.defaultProtocol}://${url}`);
+
+              // use default validation
+              if (!ctx.defaultValidate(parsedUrl.href)) {
+                return false;
+              }
+
+              // disallowed protocols
+              const disallowedProtocols: Set<string> = new Set([
+                'ftp',
+                'file',
+                'mailto',
+              ]);
+              const protocol = parsedUrl.protocol.replace(':', '');
+
+              if (disallowedProtocols.has(protocol)) {
+                return false;
+              }
+
+              // only allow protocols specified in ctx.protocols
+              const allowedProtocols = new Set(
+                ctx.protocols.map((p) => (typeof p === 'string' ? p : p.scheme))
+              );
+
+              if (!allowedProtocols.has(protocol)) {
+                return false;
+              }
+
+              // disallowed domains
+              const disallowedDomains: Set<string> = new Set([]);
+              const domain = parsedUrl.hostname;
+
+              if (disallowedDomains.has(domain)) {
+                return false;
+              }
+
+              // all checks have passed
+              return true;
+            } catch {
+              return false;
+            }
+          },
+          shouldAutoLink: (url) => {
+            try {
+              // construct URL
+              const parsedUrl = url.includes(':')
+                ? new URL(url)
+                : new URL(`https://${url}`);
+
+              // only auto-link if the domain is not in the disallowed list
+              const disallowedDomains: Set<string> = new Set([]);
+              const domain = parsedUrl.hostname;
+
+              return !disallowedDomains.has(domain);
+            } catch {
+              return false;
+            }
+          },
+        },
+      }),
       TextStyleKit,
 
       TaskList,
