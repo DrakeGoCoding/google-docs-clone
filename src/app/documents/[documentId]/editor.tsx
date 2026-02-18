@@ -3,6 +3,7 @@
 import Image from '@tiptap/extension-image';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { TableKit } from '@tiptap/extension-table';
+import { TextStyleKit } from '@tiptap/extension-text-style';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -21,6 +22,8 @@ function Editor() {
     },
     extensions: [
       StarterKit,
+      TextStyleKit,
+
       TaskList,
       TaskItem.configure({
         nested: true,

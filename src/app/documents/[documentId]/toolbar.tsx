@@ -1,19 +1,25 @@
 'use client';
 
 import {
-	BoldIcon,
-	ItalicIcon,
-	ListTodoIcon,
-	LucideIcon,
-	MessageSquarePlusIcon,
-	PrinterIcon,
-	Redo2Icon,
-	RemoveFormattingIcon,
-	SpellCheckIcon,
-	UnderlineIcon,
-	Undo2Icon,
+  BoldIcon,
+  ChevronDownIcon,
+  ItalicIcon,
+  ListTodoIcon,
+  LucideIcon,
+  MessageSquarePlusIcon,
+  PrinterIcon,
+  Redo2Icon,
+  RemoveFormattingIcon,
+  SpellCheckIcon,
+  UnderlineIcon,
+  Undo2Icon,
 } from 'lucide-react';
 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import useEditorStore from '@/store/use-editor-store';
@@ -34,6 +40,109 @@ function ToolbarButton({ onClick, isActive, icon: Icon }: ToolbarButtonProps) {
     >
       <Icon className="size-4" />
     </button>
+  );
+}
+
+function FontFamilyButton() {
+  const { editor } = useEditorStore();
+
+  const fonts = [
+    { label: 'Arial', value: 'Arial' },
+    { label: 'Times New Roman', value: 'Times New Roman' },
+    { label: 'Courier New', value: 'Courier New' },
+    { label: 'Georgia', value: 'Georgia' },
+    { label: 'Verdana', value: 'Verdana' },
+  ];
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 w-30 shrink-0 inline-flex items-center justify-between rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+          <span className="truncate">
+            {editor?.getAttributes('textStyle').fontFamily || 'Arial'}
+          </span>
+          <ChevronDownIcon className="ml-2 size-4 shrink-0" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+        {fonts.map((font) => (
+          <button
+            key={font.value}
+            className={cn(
+              'flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+              editor?.getAttributes('textStyle').fontFamily === font.value &&
+                'bg-neutral-200/80'
+            )}
+            style={{ fontFamily: font.value }}
+            onClick={() =>
+              editor?.chain().focus().setFontFamily(font.value).run()
+            }
+          >
+            <span className="text-sm">{font.label}</span>
+          </button>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
+function HeadingLevelButton() {
+  const { editor } = useEditorStore();
+
+  const headings = [
+    { label: 'Normal Text', value: 0, fontSize: '16px' },
+    { label: 'Heading 1', value: 1, fontSize: '32px' },
+    { label: 'Heading 2', value: 2, fontSize: '24px' },
+    { label: 'Heading 3', value: 3, fontSize: '20px' },
+    { label: 'Heading 4', value: 4, fontSize: '18px' },
+    { label: 'Heading 5', value: 5, fontSize: '16px' },
+  ] as const;
+
+  const getCurrentHeading = () => {
+    for (let level = 1; level <= 5; level++) {
+      if (editor?.isActive('heading', { level })) {
+        return `Heading ${level}`;
+      }
+    }
+
+    return 'Normal Text';
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 shrink-0 inline-flex items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+          <span className="truncate">{getCurrentHeading()}</span>
+          <ChevronDownIcon className="ml-2 size-4 shrink-0" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+        {headings.map((heading) => (
+          <button
+            key={heading.value}
+            className={cn(
+              'flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+              editor?.isActive('heading', { level: heading.value }) &&
+                'bg-neutral-200/80'
+            )}
+            style={{ fontSize: heading.fontSize }}
+            onClick={() => {
+              if (heading.value === 0) {
+                editor?.chain().focus().setParagraph().run();
+              } else {
+                editor
+                  ?.chain()
+                  .focus()
+                  .toggleHeading({ level: heading.value })
+                  .run();
+              }
+            }}
+          >
+            <span>{heading.label}</span>
+          </button>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -121,9 +230,9 @@ function Toolbar() {
         <ToolbarButton key={item.label} {...item} />
       ))}
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
-      {/* TODO: Font Family */}
+      <FontFamilyButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
-      {/* TODO: Heading */}
+      <HeadingLevelButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
       {/* TODO: Font size */}
       <Separator orientation="vertical" className="h-6 bg-neutral-300" />
