@@ -1,5 +1,6 @@
 'use client';
 
+import Highlight from '@tiptap/extension-highlight';
 import Image from '@tiptap/extension-image';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { TableKit } from '@tiptap/extension-table';
@@ -37,6 +38,9 @@ function Editor() {
           alwaysPreserveAspectRatio: true,
         },
       }),
+      Highlight.configure({
+        multicolor: true,
+      }),
     ],
     content: `
         <table>
@@ -55,6 +59,10 @@ function Editor() {
         </table>
         <p>This is a basic example of implementing images. Drag to re-order.</p>
         <img src="https://placehold.co/600x400" />
+        <p>This isn’t highlighted.</s></p>
+        <p><mark>But that one is.</mark></p>
+        <p><mark style="background-color: red;">And this is highlighted too, but in a different color.</mark></p>
+        <p><mark data-color="#ffa8a8">And this one has a data attribute.</mark></p>
       `,
     // Don't render immediately on the server to avoid SSR issues
     immediatelyRender: false,
