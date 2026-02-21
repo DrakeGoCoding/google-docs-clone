@@ -1,16 +1,10 @@
 {
-	"editor.fontSize": 12,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit",
-		"source.organizeImports": "explicit"
-	},
-	"files.trimFinalNewlines": true,
-	"prettier.configPath": ".prettierrc",
-	"cSpell.words": [
-		"cartesian",
-		"cmdk",
-		"Embla",
-		"tiptap",
-		"vaul"
-	]
+  "editor.fontSize": 12,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "files.trimFinalNewlines": true,
+  "prettier.configPath": ".prettierrc",
+  "cSpell.words": ["cartesian", "cmdk", "Embla", "tiptap", "vaul"]
 }

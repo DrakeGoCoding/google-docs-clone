@@ -16,6 +16,8 @@ import {
   ListTodoIcon,
   LucideIcon,
   MessageSquarePlusIcon,
+  MinusIcon,
+  PlusIcon,
   PrinterIcon,
   Redo2Icon,
   RemoveFormattingIcon,
@@ -56,7 +58,7 @@ function ToolbarButton({ onClick, isActive, icon: Icon }: ToolbarButtonProps) {
   return (
     <button
       className={cn(
-        'text-sm h-7 min-w-7 flex items-center justify-center rounded-sm hover:bg-neutral-200/80',
+        'flex h-7 min-w-7 items-center justify-center rounded-sm text-sm hover:bg-neutral-200/80',
         isActive && 'bg-neutral-200/80'
       )}
       onClick={onClick}
@@ -80,19 +82,19 @@ function FontFamilyButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 w-30 shrink-0 inline-flex items-center justify-between rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="inline-flex h-7 w-30 shrink-0 items-center justify-between overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <span className="truncate">
             {editor?.getAttributes('textStyle').fontFamily || 'Arial'}
           </span>
           <ChevronDownIcon className="ml-2 size-4 shrink-0" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+      <DropdownMenuContent className="flex flex-col gap-y-1 p-1">
         {fonts.map((font) => (
           <button
             key={font.value}
             className={cn(
-              'flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+              'flex items-center gap-x-2 rounded-sm px-2 py-1 hover:bg-neutral-200/80',
               editor?.getAttributes('textStyle').fontFamily === font.value &&
                 'bg-neutral-200/80'
             )}
@@ -134,17 +136,17 @@ function HeadingLevelButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 inline-flex items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="inline-flex h-7 min-w-7 shrink-0 items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <span className="truncate">{getCurrentHeading()}</span>
           <ChevronDownIcon className="ml-2 size-4 shrink-0" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+      <DropdownMenuContent className="flex flex-col gap-y-1 p-1">
         {headings.map((heading) => (
           <button
             key={heading.value}
             className={cn(
-              'flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+              'flex items-center gap-x-2 rounded-sm px-2 py-1 hover:bg-neutral-200/80',
               editor?.isActive('heading', { level: heading.value }) &&
                 'bg-neutral-200/80'
             )}
@@ -181,7 +183,7 @@ function TextColorButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <span className="text-xs">A</span>
           <div className="h-0.5 w-full" style={{ backgroundColor: value }} />
         </button>
@@ -205,7 +207,7 @@ function HighlightColorButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <HighlighterIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -246,11 +248,11 @@ function LinkButton() {
   return (
     <DropdownMenu onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <Link2Icon className="size-4" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
+      <DropdownMenuContent className="flex items-center gap-x-2 p-2.5">
         <Input
           placeholder="https://example.com"
           value={value}
@@ -303,7 +305,7 @@ function ImageButton() {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+          <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
             <ImageIcon className="size-4" />
           </button>
         </DropdownMenuTrigger>
@@ -375,16 +377,16 @@ function AlignButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <AlignLeftIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+      <DropdownMenuContent className="flex flex-col gap-y-1 p-1">
         {alignments.map(({ label, value, icon: Icon }) => (
           <button
             key={value}
             className={cn(
-              'flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+              'flex items-center gap-x-2 rounded-sm px-2 py-1 hover:bg-neutral-200/80',
               editor?.isActive({ textAlign: value }) && 'bg-neutral-200/80'
             )}
             onClick={() => onChange(value)}
@@ -419,16 +421,16 @@ function ListButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 shrink-0 flex flex-col items-center justify-center rounded-sm hover:bg-neutral-200/80 px-1.5 overflow-hidden text-sm">
+        <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
           <ListIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+      <DropdownMenuContent className="flex flex-col gap-y-1 p-1">
         {lists.map(({ label, icon: Icon, isActive, onClick }) => (
           <button
             key={label}
             className={cn(
-              'flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80',
+              'flex items-center gap-x-2 rounded-sm px-2 py-1 hover:bg-neutral-200/80',
               isActive && 'bg-neutral-200/80'
             )}
             onClick={onClick}
@@ -439,6 +441,95 @@ function ListButton() {
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function FontSizeButton() {
+  const { editor } = useEditorStore();
+
+  const value = editor?.getAttributes('textStyle').fontSize
+    ? editor?.getAttributes('textStyle').fontSize.replace('px', '')
+    : '16';
+
+  const [fontSize, setFontSize] = useState(value);
+  const [inputValue, setInputValue] = useState(value);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const updateFontSize = (newSize: string) => {
+    const size = parseInt(newSize);
+    if (!isNaN(size) && size > 0) {
+      editor?.chain().focus().setFontSize(`${size}px`).run();
+      setFontSize(newSize);
+      setInputValue(newSize);
+      setIsEditing(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputBLur = () => {
+    updateFontSize(inputValue);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      updateFontSize(inputValue);
+      editor?.commands?.focus();
+    }
+  };
+
+  const increment = () => {
+    const newSize = parseInt(fontSize) + 1;
+    updateFontSize(newSize.toString());
+  };
+
+  const decrement = () => {
+    const newSize = parseInt(fontSize) - 1;
+    if (newSize > 0) {
+      updateFontSize(newSize.toString());
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-x-0.5">
+      <button
+        className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80"
+        onClick={decrement}
+      >
+        <MinusIcon className="size-4" />
+      </button>
+
+      {isEditing ? (
+        <input
+          className="h-7 w-10 overflow-hidden rounded-sm border border-neutral-400 bg-transparent px-1.5 text-center text-sm focus:ring-0 focus:outline-none"
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={handleInputBLur}
+          onKeyDown={handleKeyDown}
+        />
+      ) : (
+        <button
+          className="h-7 w-10 overflow-hidden rounded-sm border border-neutral-400 bg-transparent px-1.5 hover:bg-neutral-200/80"
+          onClick={() => {
+            setIsEditing(true);
+            setFontSize(value);
+          }}
+        >
+          <span className="text-center text-sm">{value}</span>
+        </button>
+      )}
+
+      <button
+        className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80"
+        onClick={increment}
+      >
+        <PlusIcon className="size-4" />
+      </button>
+    </div>
   );
 }
 
@@ -521,7 +612,7 @@ function Toolbar() {
   ];
 
   return (
-    <div className="bg-[#F1F4F9] px-2.5 py-0.5 rounded-[24px] min-h-10 flex items-center gap-x-0.5 overflow-x-auto">
+    <div className="flex min-h-10 items-center gap-x-0.5 overflow-x-auto rounded-[24px] bg-[#F1F4F9] px-2.5 py-0.5">
       {sections[0].map((item) => (
         <ToolbarButton key={item.label} {...item} />
       ))}
@@ -530,7 +621,7 @@ function Toolbar() {
       <Separator orientation="vertical" className="h-6! bg-neutral-300" />
       <HeadingLevelButton />
       <Separator orientation="vertical" className="h-6! bg-neutral-300" />
-      {/* TODO: Font size */}
+      <FontSizeButton />
       <Separator orientation="vertical" className="h-6! bg-neutral-300" />
       {sections[1].map((item) => (
         <ToolbarButton key={item.label} {...item} />

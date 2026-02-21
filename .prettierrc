@@ -6,5 +6,8 @@
   "trailingComma": "es5",
   "bracketSpacing": true,
   "endOfLine": "crlf",
-  "useTabs": false
+  "useTabs": false,
+
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindFunctions": ["clsx", "cva", "cn"]
 }
