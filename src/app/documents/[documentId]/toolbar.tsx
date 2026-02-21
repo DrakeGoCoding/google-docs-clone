@@ -11,6 +11,7 @@ import {
   ImageIcon,
   ItalicIcon,
   Link2Icon,
+  ListCollapseIcon,
   ListIcon,
   ListOrderedIcon,
   ListTodoIcon,
@@ -533,6 +534,47 @@ function FontSizeButton() {
   );
 }
 
+function LineHeightButton() {
+  const { editor } = useEditorStore();
+
+  const lineHeights = [
+    { label: 'Default', value: 'normal' },
+    { label: 'Single', value: '1.0' },
+    { label: '1.15', value: '1.15' },
+    { label: '1.5', value: '1.5' },
+    { label: 'Double', value: '2.0' },
+  ];
+
+  const onChange = (value: string) => {
+    editor?.chain().focus().setLineHeight(value).run();
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="flex h-7 min-w-7 shrink-0 flex-col items-center justify-center overflow-hidden rounded-sm px-1.5 text-sm hover:bg-neutral-200/80">
+          <ListCollapseIcon className="size-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="flex flex-col gap-y-1 p-1">
+        {lineHeights.map(({ label, value }) => (
+          <button
+            key={value}
+            className={cn(
+              'flex items-center gap-x-2 rounded-sm px-2 py-1 hover:bg-neutral-200/80',
+              editor?.isActive('textStyle', { lineHeight: value }) &&
+                'bg-neutral-200/80'
+            )}
+            onClick={() => onChange(value)}
+          >
+            <span className="text-sm">{label}</span>
+          </button>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
+
 function Toolbar() {
   const { editor } = useEditorStore();
 
@@ -632,7 +674,7 @@ function Toolbar() {
       <LinkButton />
       <ImageButton />
       <AlignButton />
-      {/* TODO: Line height */}
+      <LineHeightButton />
       <ListButton />
       {sections[2].map((item) => (
         <ToolbarButton key={item.label} {...item} />

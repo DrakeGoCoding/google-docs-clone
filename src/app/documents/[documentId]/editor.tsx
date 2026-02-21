@@ -95,6 +95,9 @@ function Editor() {
         },
       }),
       TextStyleKit,
+      Highlight.configure({
+        multicolor: true,
+      }),
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
@@ -111,9 +114,6 @@ function Editor() {
           enabled: true,
           alwaysPreserveAspectRatio: true,
         },
-      }),
-      Highlight.configure({
-        multicolor: true,
       }),
     ],
     content: `
