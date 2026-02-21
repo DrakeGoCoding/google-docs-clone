@@ -1,9 +1,10 @@
 'use client';
 
-import Highlight from '@tiptap/extension-highlight';
-import Image from '@tiptap/extension-image';
+import { Highlight } from '@tiptap/extension-highlight';
+import { Image } from '@tiptap/extension-image';
 import { TaskItem, TaskList } from '@tiptap/extension-list';
 import { TableKit } from '@tiptap/extension-table';
+import { TextAlign } from '@tiptap/extension-text-align';
 import { TextStyleKit } from '@tiptap/extension-text-style';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -94,6 +95,9 @@ function Editor() {
         },
       }),
       TextStyleKit,
+      TextAlign.configure({
+        types: ['heading', 'paragraph'],
+      }),
 
       TaskList,
       TaskItem.configure({

@@ -7,6 +7,10 @@
 	"files.trimFinalNewlines": true,
 	"prettier.configPath": ".prettierrc",
 	"cSpell.words": [
-		"tiptap"
+		"cartesian",
+		"cmdk",
+		"Embla",
+		"tiptap",
+		"vaul"
 	]
 }
